@@ -17,10 +17,16 @@ No ar. Cada peça tem endereço próprio e permanente:
 | Crise de sequestro esplênico | [`/infograficos/sequestro-esplenico/`](https://dventurim.github.io/medram/infograficos/sequestro-esplenico/) |
 | Hipocalemia grave e PPT (card) | [`/cards/hipocalemia-ppt/`](https://dventurim.github.io/medram/cards/hipocalemia-ppt/) |
 
-## 📂 Estrutura
+Cada peça mora na própria pasta, com tudo que precisa dentro dela, e o arquivo principal chama-se sempre `index.html` — é isso que deixa a URL limpa (`…/cards/hipocalemia-ppt/`, sem `.html` no fim).
+
+<details>
+<summary>Estrutura de pastas</summary>
 
 ```
 index.html                        galeria (a página que o Pages serve)
+baralho/
+  index.html                      MedRam Cards — amostra e lista de espera
+  assets/                         imagens da página
 cards/
   hipocalemia-ppt/
     index.html                    o card
@@ -32,7 +38,7 @@ infograficos/
   sequestro-esplenico/index.html
 ```
 
-Cada peça mora na própria pasta, com tudo que precisa dentro dela, e o arquivo principal chama-se sempre `index.html` — é isso que deixa a URL limpa (`…/cards/hipocalemia-ppt/`, sem `.html` no fim).
+</details>
 
 ## 🩺 Peças
 
