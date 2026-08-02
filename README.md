@@ -7,10 +7,16 @@ Infográficos e cards clínicos construídos sobre literatura primária. Um tema
 
 ## 🌐 Galeria
 
-**https://dventurim.github.io/estudos-medicina/**
+O conteúdo está pronto para o GitHub Pages servir. Faltam **dois** passos, nesta ordem.
 
-> Para publicar: **Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)`**.
-> Sem esse passo a galeria não vai ao ar — o resto já está pronto.
+**1. Resolver o domínio.** Hoje `dventurim.github.io` responde `301` para `http://venturim.me/…`, porque o repositório `dventurim.github.io` tem um domínio próprio configurado — e `venturim.me` não resolve. Enquanto isso valer, ligar o Pages não adianta: a URL redireciona para um endereço que não existe.
+
+- **Caminho rápido:** em `dventurim.github.io` → *Settings → Pages → Custom domain*, apagar `venturim.me`. A galeria passa a atender em `https://dventurim.github.io/estudos-medicina/`.
+- **Caminho bonito:** reativar `venturim.me` e apontar o DNS para o GitHub. A galeria fica em `https://venturim.me/estudos-medicina/`.
+
+**2. Ligar o Pages neste repositório:** *Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)`*.
+
+Feito isso, atualize o endereço aqui e o badge **Acervo** no [README do perfil](https://github.com/dventurim/dventurim).
 
 ## 📂 Estrutura
 
