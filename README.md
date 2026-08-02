@@ -1,37 +1,62 @@
-# Estudos de Medicina
+# MedRam — Memória Clínica
 
-Materiais de estudo — cards clínicos, ECGs e resumos.
+Infográficos e cards clínicos construídos sobre literatura primária. Um tema por peça, com o raciocínio inteiro visível — semiologia, fisiopatologia, algoritmo de decisão e a armadilha que derruba a questão de prova.
 
-## Cards
+**Daniel Venturim Ramos** — Faculdade de Medicina, Universidade Federal de Minas Gerais (UFMG), desde 2018.
+[ORCID 0000-0002-1910-6062](https://orcid.org/0000-0002-1910-6062) · [Currículo Lattes](http://lattes.cnpq.br/1211641598704539) · [@medramnews](https://www.instagram.com/medramnews/) · [Blog](https://medram-news.blogspot.com/)
 
-### Card PPT Hipocalemia
+## 🌐 Galeria
 
-Card de ECG sobre **hipocalemia grave e paralisia periódica tireotóxica (PPT)**.
+**https://dventurim.github.io/estudos-medicina/**
 
-| Arquivo | O que é |
-| --- | --- |
-| `Card PPT Hipocalemia.dc.html` | O componente: template `x-dc` + classe `DCLogic` |
-| `support.js` | O `dc-runtime` que o card carrega via `script src` |
-| `assets/ecg.png` | ECG de 12 derivações, 1350×900 |
-| `assets/800x400.gif` | O mesmo traçado em resolução menor (não referenciado pelo card) |
+> Para publicar: **Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)`**.
+> Sem esse passo a galeria não vai ao ar — o resto já está pronto.
 
-O card traz o K⁺ sérico no cabeçalho, a figura do ECG, um batimento esquemático em SVG (achatamento de T, onda U, fusão T–U) e três seções numeradas — achados no ECG, fisiopatologia e tratamento — fechando com a pérola.
+## 📂 Estrutura
 
-**Props** (definidas em `data-props`, viram CSS custom properties na raiz):
+```
+index.html                        galeria (a página que o Pages serve)
+cards/
+  hipocalemia-ppt/
+    index.html                    o card
+    support.js                    runtime dos Design Components
+    assets/ecg.png                ECG do caso 183 do Wave-Maven
+infograficos/
+  README.md                       como adicionar uma peça
+```
 
-- `paletteLead` — `Terracota` / `Sálvia`
-- `shapeStyle` — `Redondo` / `Suave` / `Nítido`
-- `decorShapes` — liga/desliga as formas de fundo
+Cada peça mora na própria pasta, com tudo que precisa dentro dela, e o arquivo principal chama-se sempre `index.html` — é isso que deixa a URL limpa (`…/cards/hipocalemia-ppt/`, sem `.html` no fim).
 
-**Para visualizar:** o card precisa ser servido por HTTP (o runtime faz `fetch` do próprio arquivo, o que não funciona em `file://`):
+## 🩺 Peças
+
+### Hipocalemia grave e paralisia periódica tireotóxica
+
+`cards/hipocalemia-ppt/` — ECG de 12 derivações, batimento esquemático em SVG com a fusão T–U, os cinco achados eletrocardiográficos, a bomba Na⁺/K⁺-ATPase por trás do shift, e o ponto que muda conduta: repor K⁺ com cautela, porque o potássio corporal total é normal e o rebote é real.
+
+O card é um Design Component — o template fica no `<x-dc>` e a lógica numa classe `DCLogic`, que expõe três props compiladas em CSS custom properties:
+
+| Prop | Valores | Efeito |
+| --- | --- | --- |
+| `paletteLead` | `Terracota` · `Sálvia` | qual das duas paletas lidera |
+| `shapeStyle` | `Redondo` · `Suave` · `Nítido` | escala de border-radius |
+| `decorShapes` | `true` · `false` | formas decorativas de fundo |
+
+## 🔧 Rodando localmente
+
+O runtime faz `fetch` do próprio arquivo, o que não funciona em `file://`. Sirva por HTTP:
 
 ```bash
 python3 -m http.server 8000
-# abrir http://localhost:8000/Card%20PPT%20Hipocalemia.dc.html
+# galeria:  http://localhost:8000/
+# o card:   http://localhost:8000/cards/hipocalemia-ppt/
 ```
 
-## Fonte do ECG
+## 📖 Fontes e direitos
 
-O traçado é o **caso 183** do [ECG Wave-Maven](https://ecg.bidmc.harvard.edu), do Beth Israel Deaconess Medical Center — K⁺ 1,9 mEq/L, taquicardia sinusal em repouso com prolongamento do PR, ondas P em DII sobrepostas às ondas TU, ondas U muito amplas (V3–V4), diagnóstico de paralisia periódica tireotóxica.
+Cada peça cita a literatura que a sustenta, ao lado da afirmação — não numa lista solta no rodapé.
 
-Imagem © Beth Israel Deaconess Medical Center, todos os direitos reservados. Mantida aqui em repositório privado para uso pessoal de estudo, com crédito à fonte na legenda do card.
+O ECG do card de hipocalemia é o **caso 183** do [ECG Wave-Maven](https://ecg.bidmc.harvard.edu), do Beth Israel Deaconess Medical Center: K⁺ 1,9 mEq/L, taquicardia sinusal em repouso com prolongamento do PR, ondas P em DII sobrepostas às ondas TU, ondas U muito amplas em V3–V4, paralisia periódica tireotóxica. Imagem © Beth Israel Deaconess Medical Center, creditada na legenda do card.
+
+---
+
+Material de estudo. Não se destina a orientar conduta em paciente individual.
