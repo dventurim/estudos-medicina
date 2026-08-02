@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedRam - Hipocalemia e ECG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Light Theme */
+    --teal: #0D9488;
+    --amber: #F59E0B;
+    --crimson: #DC2626;
+    --indigo: #4F46E5;
+    --slate: #64748B;
+    --bg: #F4F7F8;
+    --surface: #FFFFFF;
+    --surface-2: #EDF2F4;
+    --ink: #0B1A24;
+    --ink-2: #33505F;
+    --ink-3: #6C8798;
+    --rule: #D5E1E6;
+    --rule-strong: #B7CAD2;
+    
+    /* Typography */
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-serif: 'Newsreader', serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  [data-theme="dark"] {
+    --teal: #2DD4BF;
+    --amber: #FBBF24;
+    --crimson: #F87171;
+    --indigo: #A5B4FC;
+    --slate: #94A3B8;
+    --bg: #080F16;
+    --surface: #0F1B25;
+    --surface-2: #14232F;
+    --ink: #E9F2F6;
+    --ink-2: #A7BEC9;
+    --ink-3: #6F8B99;
+    --rule: #1D303D;
+    --rule-strong: #2A4453;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .sheet {
+    background-color: var(--surface);
+    width: 1400px;
+    max-width: 100%;
+    padding: 56px 60px 42px 60px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid var(--rule);
+  }
+
+  /* Masthead */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--rule-strong);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .masthead .brand {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Typography Scale */
+  h1 { font-family: var(--font-display); font-size: 62px; font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .deck { font-size: 27px; color: var(--ink-2); line-height: 1.3; margin-bottom: 32px; font-style: italic; }
+  h2 { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--ink); margin-bottom: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+  h3 { font-family: var(--font-display); font-size: 21px; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
+  
+  p, li { font-size: 16px; line-height: 1.5; color: var(--ink-2); margin-bottom: 12px; }
+  
+  .label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--slate); letter-spacing: 0.05em; margin-bottom: 8px; display: inline-block;}
+
+  /* Layout */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 430px;
+    gap: 38px;
+    margin-bottom: 40px;
+  }
+
+  .association-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 40px;
+  }
+
+  /* Components */
+  .card {
+    background-color: var(--surface-2);
+    border-radius: 6px;
+    padding: 24px;
+    border: 1px solid var(--rule);
+  }
+  
+  .card.highlight-teal { border-top: 4px solid var(--teal); }
+  .card.highlight-amber { border-top: 4px solid var(--amber); }
+  .card.highlight-crimson { border-top: 4px solid var(--crimson); }
+  .card.highlight-indigo { border-top: 4px solid var(--indigo); }
+  .card.highlight-slate { border-top: 4px solid var(--slate); }
+
+  /* Principle Callout */
+  .principle-callout {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    padding: 24px;
+    background-color: rgba(13, 148, 136, 0.05); /* teal tinted */
+    border-left: 4px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 32px;
+  }
+  
+  [data-theme="dark"] .principle-callout {
+    background-color: rgba(45, 212, 191, 0.05);
+  }
+
+  /* Severity Timeline */
+  .timeline {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .timeline-item {
+    flex: 1;
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .timeline-item .value { font-family: var(--font-mono); font-size: 18px; font-weight: 600; margin-bottom: 4px;}
+  .timeline-item.leve { border-top: 3px solid var(--teal); }
+  .timeline-item.leve .value { color: var(--teal); }
+  .timeline-item.mod { border-top: 3px solid var(--amber); }
+  .timeline-item.mod .value { color: var(--amber); }
+  .timeline-item.grave { border-top: 3px solid var(--crimson); }
+  .timeline-item.grave .value { color: var(--crimson); }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--surface-2);
+    border: 1px solid var(--rule);
+    color: var(--ink-2);
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-family: var(--font-serif);
+  }
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+  }
+  th {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--ink);
+    background-color: var(--surface-2);
+  }
+  
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="sheet" id="sheet">
+  
+  <div class="masthead">
+    <div class="brand">MedRam · Inteligência Clínica</div>
+    <div>Ficha de Revisão · Atualizada: Ago 2026</div>
+  </div>
+
+  <h1>Hipocalemia e ECG</h1>
+  <div class="deck">A relação entre o valor absoluto de K⁺ e o aparecimento das alterações clássicas de ECG é imprevisível; um traçado normal não exclui alteração grave.</div>
+
+  <div class="principle-callout">
+    Paradoxalmente ao maior gradiente de concentração transmembrana, a hipocalemia <b>reduz a condutância dos canais de K⁺ miocárdicos (I<sub>Kr</sub>)</b>. O retardo na saída de potássio torna a repolarização ventricular prolongada e heterogênea, criando o substrato ideal para arritmias de reentrada.
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item leve">
+      <div class="label">Leve</div>
+      <div class="value">3,0 a 3,4 mEq/L</div>
+      <p style="font-size:13px; margin:0;">Classificação laboratorial. Risco arrítmico base.</p>
+    </div>
+    <div class="timeline-item mod">
+      <div class="label">Moderada</div>
+      <div class="value">2,5 a 2,9 mEq/L</div>
+      <p style="font-size:13px; margin:0;">Aumento do risco. Início das alterações de repolarização.</p>
+    </div>
+    <div class="timeline-item grave">
+      <div class="label">Grave</div>
+      <div class="value">&lt; 2,5 mEq/L</div>
+      <p style="font-size:13px; margin:0;">Urgência médica. Risco altíssimo de arritmias malignas.</p>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <div class="left-col">
+      <h2>Progressão Eletrocardiográfica e Leitura</h2>
+      
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div>
+          <h3>1. Achatamento de Onda T e Infra de ST</h3>
+          <p>O achado eletrocardiográfico precoce clássico é o <b>achatamento ou redução de amplitude da onda T</b>, refletindo a lentidão da repolarização. Com o agravamento, surgem o infradesnivelamento do ST e a onda T invertida.</p>
+          <span class="tag">#Repolarização</span>
+        </div>
+
+        <div>
+          <h3>2. Onda U Proeminente</h3>
+          <p>Normalmente pequena, a onda U torna-se proeminente (mais bem vista em V2–V3). <b>Para julgar sua proeminência, compare-a com a onda T na mesma derivação.</b> Em quadros severos, a onda U pode ultrapassar a onda T em amplitude.</p>
+          <span class="tag">#OndaU</span> <span class="tag" style="color:var(--amber); border-color:var(--amber);">Cuidado: Bradicardia e HVE também geram Onda U</span>
+        </div>
+
+        <div>
+          <h3>3. Fusão T–U e o Pseudo-QT Longo</h3>
+          <p>O padrão clássico de risco arrítmico alto é a fusão da onda T com uma onda U gigante. Os softwares de ECG frequentemente medem o intervalo <b>QU</b> como se fosse o QT (pseudo-QT longo). Contudo, a hipocalemia causa prolongamento <i>verdadeiro</i> do QT também.</p>
+          <span class="tag" style="color:var(--crimson); border-color:var(--crimson);">#Armadilha de Medição</span>
+        </div>
+      </div>
+      
+      <h2 style="margin-top: 40px;">Diagnóstico Diferencial Clínico</h2>
+      <table>
+        <tr>
+          <th>Achado no ECG</th>
+          <th>Suspeita na Hipocalemia</th>
+          <th>Diferencial Importante</th>
+        </tr>
+        <tr>
+          <td>Infra de ST difuso + Onda U</td>
+          <td>Hipocalemia grave</td>
+          <td>Isquemia miocárdica (podem coexistir)</td>
+        </tr>
+        <tr>
+          <td>Intervalo longo</td>
+          <td>QT prolongado no final (Onda T achatada, U gigante)</td>
+          <td><b>Hipocalcemia:</b> prolonga QT pelo alongamento puro do segmento ST.</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="right-col">
+      <div class="card highlight-slate" style="margin-bottom: 24px;">
+        <h3>Conduta e Reposição</h3>
+        <p>A via de reposição deve ser pautada pela gravidade clínica, não apenas pelo laboratório.</p>
+        <ul style="margin-left: 20px;">
+          <li><b>Via Oral:</b> Preferida em pacientes estáveis (K⁺ leve/mod). Mais segura contra hipercalemia iatrogênica.</li>
+          <li><b>Via IV:</b> Indicada se K⁺ &lt; 2,5 mEq/L, sintomas severos, arritmia ou intolerância oral.</li>
+        </ul>
+        <div style="background:var(--surface); padding:16px; border-radius:4px; margin-top:16px; font-size:14px;">
+          <div class="label" style="color:var(--crimson);">Regras de Segurança IV</div>
+          <p style="margin-bottom:8px;">• Concentração periférica máxima recomendada: <b>40 mEq/L</b>.<br>
+             • Infusões rápidas (>10–20 mEq/h) requerem acesso central, ECG contínuo e avaliações frequentes.<br>
+             • <b>Solução:</b> Preferir SF 0,9%. O Soro Glicosado estimula insulina, provocando shift celular e agravando a hipocalemia inicial.</p>
+          <p style="margin:0; font-weight:500; color:var(--crimson);">Nunca administre KCl concentrado em bolus direto (risco de PCR).</p>
+        </div>
+      </div>
+      
+      <div class="card highlight-crimson">
+        <h3>Alerta: Avalie Função Renal</h3>
+        <p style="font-size:14px; margin:0;">O principal fator orgânico a checar antes de prescrever potássio agressivo é a <b>função renal (débito urinário)</b>, devido ao risco extremo de hipercalemia de rebote.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Associações Clínicas Críticas</h2>
+  <div class="association-grid">
+    <div class="card highlight-amber">
+      <h3>Deficiência de Magnésio</h3>
+      <p style="font-size:14px;">Na hipocalemia refratária, dose o magnésio. O magnésio inibe os canais ROMK no néfron distal; na sua ausência, ocorre perda renal persistente de K⁺.</p>
+    </div>
+    <div class="card highlight-indigo">
+      <h3>Toxicidade Digitálica</h3>
+      <p style="font-size:14px;">O potássio compete com a digoxina pela Na⁺/K⁺-ATPase. A hipocalemia aumenta maciçamente o risco de intoxicação, mesmo com digoxinemia em níveis terapêuticos normais.</p>
+    </div>
+    <div class="card highlight-crimson">
+      <h3>Torsades de Pointes</h3>
+      <p style="font-size:14px;">A heterogeneidade de repolarização e o QT/QU longo predispõem à taquicardia ventricular polimórfica (Torsades), fibrilação ventricular e morte súbita.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p style="margin-bottom:4px;"><b>Referências:</b> Guo et al. (PMC2735921) | AHA/ACCF/HRS (JACC 2009) | DailyMed (Digoxina) | Protocolo Assistencial Ebserh.</p>
+    <p style="margin:0;">*Dica de uso: Dê um duplo-clique em qualquer lugar da tela para alternar entre os temas claro e escuro.</p>
+  </div>
+</div>
+
+<script>
+  // Theme toggle via double click
+  document.addEventListener('dblclick', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+  });
+</script>
+
+</body>
+</html>
