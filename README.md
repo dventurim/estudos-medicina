@@ -7,15 +7,15 @@ Infográficos e cards clínicos construídos sobre literatura primária. Um tema
 
 ## 🌐 Galeria
 
-### **https://dventurim.github.io/estudos-medicina/**
+### **https://dventurim.github.io/medram/**
 
 No ar. Cada peça tem endereço próprio e permanente:
 
 | Peça | Endereço |
 | --- | --- |
-| Hipocalemia e ECG | [`/infograficos/hipocalemia-ecg/`](https://dventurim.github.io/estudos-medicina/infograficos/hipocalemia-ecg/) |
-| Crise de sequestro esplênico | [`/infograficos/sequestro-esplenico/`](https://dventurim.github.io/estudos-medicina/infograficos/sequestro-esplenico/) |
-| Hipocalemia grave e PPT (card) | [`/cards/hipocalemia-ppt/`](https://dventurim.github.io/estudos-medicina/cards/hipocalemia-ppt/) |
+| Hipocalemia e ECG | [`/infograficos/hipocalemia-ecg/`](https://dventurim.github.io/medram/infograficos/hipocalemia-ecg/) |
+| Crise de sequestro esplênico | [`/infograficos/sequestro-esplenico/`](https://dventurim.github.io/medram/infograficos/sequestro-esplenico/) |
+| Hipocalemia grave e PPT (card) | [`/cards/hipocalemia-ppt/`](https://dventurim.github.io/medram/cards/hipocalemia-ppt/) |
 
 ## 📂 Estrutura
 
