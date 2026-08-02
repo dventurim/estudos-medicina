@@ -52,6 +52,13 @@
   h2{font-size:23px;margin:0 0 10px;letter-spacing:-.01em}
   .note{color:var(--muted);margin:0 0 26px;max-width:66ch;font-size:15px}
 
+  .shot{margin:0 0 26px}
+  .shot img{
+    display:block;width:100%;height:auto;border-radius:12px;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .shot figcaption{margin-top:12px;font-size:13px;line-height:1.5;color:var(--muted)}
+
   .deckcards{display:flex;flex-direction:column;gap:14px}
   .fc{
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
@@ -120,6 +127,11 @@
       Em vez de um card gigante com o mnemônico inteiro, cada componente vira uma
       pergunta isolada, que você acerta ou erra sozinha. Clique para revelar.
     </p>
+
+    <figure class="shot">
+      <img src="assets/lemon-3-3-2.png" alt="Painel LEMON: predição de via aérea difícil, com a regra 3-3-2 medida em larguras de dedo — abertura bucal, mento ao osso hioide e hioide à cartilagem tireoide.">
+      <figcaption>O material de apoio que acompanha o tópico dentro do baralho — desenhado do zero, no mesmo padrão dos infográficos.</figcaption>
+    </figure>
 
     <div class="deckcards">
       <div class="fc"><p class="q">Mnemônico LEMON — o que deve ser avaliado no componente <b>“L”</b> (Look Externally)?<br><span class="cloze">Presença de boca pequena, pescoço curto ou obesidade</span></p><p class="hint">Clique para revelar</p></div>
