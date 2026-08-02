@@ -7,16 +7,15 @@ Infográficos e cards clínicos construídos sobre literatura primária. Um tema
 
 ## 🌐 Galeria
 
-O conteúdo está pronto para o GitHub Pages servir. Faltam **dois** passos, nesta ordem.
+### **https://dventurim.github.io/estudos-medicina/**
 
-**1. Resolver o domínio.** Hoje `dventurim.github.io` responde `301` para `http://venturim.me/…`, porque o repositório `dventurim.github.io` tem um domínio próprio configurado — e `venturim.me` não resolve. Enquanto isso valer, ligar o Pages não adianta: a URL redireciona para um endereço que não existe.
+No ar. Cada peça tem endereço próprio e permanente:
 
-- **Caminho rápido:** em `dventurim.github.io` → *Settings → Pages → Custom domain*, apagar `venturim.me`. A galeria passa a atender em `https://dventurim.github.io/estudos-medicina/`.
-- **Caminho bonito:** reativar `venturim.me` e apontar o DNS para o GitHub. A galeria fica em `https://venturim.me/estudos-medicina/`.
-
-**2. Ligar o Pages neste repositório:** *Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)`*.
-
-Feito isso, atualize o endereço aqui e o badge **Acervo** no [README do perfil](https://github.com/dventurim/dventurim).
+| Peça | Endereço |
+| --- | --- |
+| Hipocalemia e ECG | [`/infograficos/hipocalemia-ecg/`](https://dventurim.github.io/estudos-medicina/infograficos/hipocalemia-ecg/) |
+| Crise de sequestro esplênico | [`/infograficos/sequestro-esplenico/`](https://dventurim.github.io/estudos-medicina/infograficos/sequestro-esplenico/) |
+| Hipocalemia grave e PPT (card) | [`/cards/hipocalemia-ppt/`](https://dventurim.github.io/estudos-medicina/cards/hipocalemia-ppt/) |
 
 ## 📂 Estrutura
 
@@ -29,6 +28,8 @@ cards/
     assets/ecg.png                ECG do caso 183 do Wave-Maven
 infograficos/
   README.md                       como adicionar uma peça
+  hipocalemia-ecg/index.html
+  sequestro-esplenico/index.html
 ```
 
 Cada peça mora na própria pasta, com tudo que precisa dentro dela, e o arquivo principal chama-se sempre `index.html` — é isso que deixa a URL limpa (`…/cards/hipocalemia-ppt/`, sem `.html` no fim).

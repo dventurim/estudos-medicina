@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crise de Sequestro Esplênico | MedRam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0D1413; --text:#F2EFE8; --text-sec:#93A19D;
+  --teal:#2DD4BF; --amber:#F0A02A; --crimson:#F4767A; --rule:#243230; --hair:#33413E; --mist:#8AA09B;
+  --stage-w:1920px; --stage-h:1080px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:100%; height:100%; background:var(--bg);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:geometricPrecision; }
+body { display:flex; align-items:center; justify-content:center; overflow:hidden;
+  font-family:'IBM Plex Mono','DejaVu Sans Mono',monospace; color:var(--text); }
+.viewport { width:var(--stage-w); height:var(--stage-h); flex:0 0 auto; transform-origin:center center; }
+.stage { position:relative; width:var(--stage-w); height:var(--stage-h); padding:40px 58px 26px;
+  display:flex; flex-direction:column; background:var(--bg); border-radius:8px; overflow:hidden;
+  box-shadow:0 20px 40px rgba(0,0,0,0.45); }
+.grain { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;
+  opacity:0.05; mix-blend-mode:screen; }
+.stage > *:not(.grain) { position:relative; z-index:1; }
+
+header { display:flex; align-items:flex-start; justify-content:space-between; }
+h1 { font-family:'Space Grotesk','DejaVu Sans',sans-serif; font-weight:700; font-size:52px;
+  line-height:1; letter-spacing:-0.018em; color:var(--text); }
+.sub { font-family:'Space Grotesk','DejaVu Sans',sans-serif; font-size:18px; color:var(--text-sec);
+  letter-spacing:0.075em; margin-top:9px; }
+
+.lockup { display:flex; align-items:center; gap:14px; padding-top:2px; }
+.lockup .mark { display:block; border-radius:16px; }
+.wm { font-family:'Space Grotesk','DejaVu Sans',sans-serif; font-size:30px; line-height:1; letter-spacing:-0.01em; }
+.wm .med { font-weight:500; color:#F2EFE8; }
+.wm .ram { font-weight:700; color:#2DD4BF; }
+.tagline { font-family:'IBM Plex Mono','DejaVu Sans Mono',monospace; font-size:10px; font-weight:500;
+  letter-spacing:0.34em; text-transform:uppercase; color:var(--mist); margin-top:7px; }
+
+.flow { position:relative; height:20px; margin-top:14px; }
+.flow .line { position:absolute; left:0; right:14px; top:9px; height:1.5px; background:var(--amber); opacity:0.5; }
+.flow .head { position:absolute; right:0; top:3px; width:0; height:0; border-top:7px solid transparent;
+  border-bottom:7px solid transparent; border-left:14px solid var(--amber); opacity:0.85; }
+.flow .node { position:absolute; top:3px; width:14px; height:14px; border-radius:50%; background:var(--bg);
+  border:1.6px solid var(--amber); transform:translateX(-50%); }
+
+.panels { display:grid; grid-template-columns:repeat(4,1fr); flex:1; margin-top:8px; min-height:0; }
+.panel { display:flex; flex-direction:column; padding:0 24px; min-width:0; min-height:0; }
+.panel:first-child { padding-left:0; } .panel:last-child { padding-right:0; }
+.panel + .panel { border-left:1px solid var(--rule); }
+.panel + .panel::before { content:""; position:absolute; left:-7px; top:calc(50% - 8px);
+  border-left:13px solid var(--amber); border-top:8px solid transparent; border-bottom:8px solid transparent; opacity:0.9; }
+
+.plabel { display:flex; align-items:baseline; }
+.pnum { font-family:'Space Grotesk','DejaVu Sans',sans-serif; font-weight:700; font-size:26px; color:var(--amber); }
+.pbar { color:var(--hair); margin:0 10px; font-size:22px; }
+.pname { font-family:'Space Grotesk','DejaVu Sans',sans-serif; font-weight:600; font-size:19px;
+  letter-spacing:0.045em; color:var(--text); }
+.note { font-family:'Newsreader',serif; font-style:italic; font-size:17px; line-height:1.35; color:var(--text);
+  border-left:3px solid; padding:1px 0 1px 13px; margin:11px 0 4px; min-height:46px; }
+.fig { flex:1; display:flex; align-items:center; justify-content:center; min-height:0; }
+.fig svg { width:100%; height:100%; }
+
+.band { border-top:2px solid var(--amber); margin-top:10px; padding:13px 18px 8px; background:rgba(240,160,42,0.05);
+  border-radius:0 0 8px 8px; display:flex; align-items:flex-end; justify-content:space-between; gap:40px; }
+.band .l1 { font-family:'Space Grotesk','DejaVu Sans',sans-serif; font-weight:600; font-size:19px;
+  letter-spacing:0.11em; color:var(--text); }
+.band .l1 em { font-style:normal; color:var(--amber); font-weight:700; }
+.band .l2 { font-family:'IBM Plex Mono','DejaVu Sans Mono',monospace; font-size:16.5px;
+  letter-spacing:0.085em; color:var(--text-sec); margin-top:8px; }
+.band .l2 b { color:var(--text); font-weight:600; }
+.band .l2 .sep { color:var(--hair); margin:0 12px; }
+.bandside { text-align:right; flex:0 0 auto; }
+.src { font-family:'IBM Plex Mono','DejaVu Sans Mono',monospace; font-size:10.5px; letter-spacing:0.1em;
+  color:var(--text-sec); text-transform:uppercase; }
+.sig { font-family:'IBM Plex Mono','DejaVu Sans Mono',monospace; font-size:10.5px; letter-spacing:0.3em;
+  color:var(--mist); text-transform:uppercase; margin-top:8px; }
+
+.fig text { font-family:'IBM Plex Mono','DejaVu Sans Mono',monospace; }
+.sname { font-family:'Newsreader',serif; font-size:16px; font-weight:500; }
+.mlab { font-size:10px; letter-spacing:0.14em; font-weight:500; }
+.cap2 { font-size:11.5px; letter-spacing:0.01em; }
+.val { font-size:12.5px; font-weight:500; }
+.valb { font-size:14px; font-weight:600; }
+.dlab { font-family:'Space Grotesk','DejaVu Sans',sans-serif; font-size:19px; font-weight:500; }
+.arw { font-family:'DejaVu Sans',sans-serif; font-size:23px; font-weight:700; }
+@media print { body { display:block; } .stage { box-shadow:none; border-radius:0; } }
+</style></head>
+<body>
+<div class="viewport" id="viewport">
+  <div class="stage" role="figure" aria-labelledby="ttl sub">
+    <svg class="grain" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <filter id="grainf"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+      <rect width="100%" height="100%" filter="url(#grainf)"/>
+    </svg>
+    <header>
+      <div>
+        <h1 id="ttl">CRISE DE SEQUESTRO ESPLÊNICO</h1>
+        <div class="sub" id="sub">Fisiopatologia&nbsp;&nbsp;|&nbsp;&nbsp;Doença Falciforme</div>
+      </div>
+      <div class="lockup">
+        <svg class="mark" viewBox="0 0 100 100" width="54" height="54" aria-hidden="true"><rect width="100" height="100" rx="29" fill="#0F766E"/><path d="M30,66 L30,31 L50,50 L70,31 L70,66" fill="none" stroke="#FAF9F6" stroke-width="9.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M17,71 L40,71 L44,71 L47,59 L50.5,80 L54,71 L83,71" fill="none" stroke="#F2BC6B" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <div>
+          <div class="wm"><span class="med">Med</span><span class="ram">Ram</span></div>
+          <div class="tagline">Memória Clínica</div>
+        </div>
+      </div>
+    </header>
+    <div class="flow" aria-hidden="true"><div class="line"></div><div class="head"></div>
+      <div class="node" style="left:12.5%"></div><div class="node" style="left:37.5%"></div>
+      <div class="node" style="left:62.5%"></div><div class="node" style="left:87.5%"></div></div>
+    <div class="panels"><section class="panel" aria-labelledby="p1">
+  <div class="plabel" id="p1"><span class="pnum">1</span><span class="pbar">|</span><span class="pname">POLIMERIZAÇÃO</span></div>
+  <p class="note" style="border-left-color:#F4767A">HbS desoxigenada → polímero → hemácia rígida</p>
+  <div class="fig"><svg role="img" aria-labelledby="t1 d1" viewBox="0 0 400 640" preserveAspectRatio="xMidYMid meet"><title id="t1">Painel 1: Polimerização</title><desc id="d1">Hemácia bicôncava oxigenada, nucleação de fibras de HbS e hemácia falcizada rígida, com a mutação beta 6 glutamato para valina e a reversibilidade com reoxigenação.</desc>
+<defs>
+<radialGradient id="gT" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#2DD4BF" stop-opacity="0.072"/><stop offset="1" stop-color="#2DD4BF" stop-opacity="0.290"/></radialGradient>
+<radialGradient id="gA" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#F0A02A" stop-opacity="0.072"/><stop offset="1" stop-color="#F0A02A" stop-opacity="0.261"/></radialGradient>
+<linearGradient id="gC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4767A" stop-opacity="0.319"/><stop offset="1" stop-color="#F4767A" stop-opacity="0.116"/></linearGradient>
+</defs>
+<g transform="translate(150,92)">
+<ellipse rx="92" ry="57" fill="url(#gT)" stroke="#2DD4BF" stroke-width="3"/>
+<ellipse cx="-4" cy="-2" rx="42" ry="23" fill="#2DD4BF" fill-opacity="0.232" stroke="#2DD4BF" stroke-width="1.5"/>
+<path d="M -70,-24 C -50,-42 -16,-49 10,-44" fill="none" stroke="#FFFFFF" stroke-width="3.4" opacity="0.28"/>
+<path d="M -66,32 C -34,50 24,50 60,28" fill="none" stroke="#2DD4BF" stroke-width="1.2" opacity="0.35"/>
+</g>
+<text class="sname" x="252" y="80" fill="#F2EFE8">oxigenada</text>
+<text class="val" x="252" y="100" fill="#2DD4BF">HbS solúvel</text>
+<line x1="150" y1="158" x2="150" y2="186" stroke="#F0A02A" stroke-width="4" stroke-linecap="round"/>
+<path d="M 150,198 L 142,184 L 158,184 Z" fill="#F0A02A"/>
+<text class="val" x="170" y="180" fill="#F0A02A">pO<tspan dy="3" font-size="8">2</tspan><tspan dy="-3"> baixa | pH ácido</tspan></text>
+<g transform="translate(150,252)">
+<path d="M -84,-10 C -82,-44 -50,-58 -12,-54 C 30,-50 74,-30 72,4 C 70,38 38,56 -2,54 C -44,52 -86,24 -84,-10 Z" fill="url(#gA)" stroke="#F0A02A" stroke-width="3" stroke-linejoin="round"/>
+<clipPath id="cB"><path d="M -84,-10 C -82,-44 -50,-58 -12,-54 C 30,-50 74,-30 72,4 C 70,38 38,56 -2,54 C -44,52 -86,24 -84,-10 Z"/></clipPath><g clip-path="url(#cB)">
+<line x1="-84" y1="58" x2="-50" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+<line x1="-64" y1="58" x2="-30" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+<line x1="-44" y1="58" x2="-10" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+<line x1="-24" y1="58" x2="10" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+<line x1="-4" y1="58" x2="30" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+<line x1="16" y1="58" x2="50" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+<line x1="36" y1="58" x2="70" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+<line x1="56" y1="58" x2="90" y2="-60" stroke="#F0A02A" stroke-width="1.6" opacity="0.5"/>
+</g></g>
+<text class="sname" x="240" y="244" fill="#F2EFE8">nucleação</text>
+<text class="val" x="240" y="264" fill="#F0A02A">fibras alinhadas</text>
+<line x1="150" y1="318" x2="150" y2="346" stroke="#F0A02A" stroke-width="4" stroke-linecap="round"/>
+<path d="M 150,358 L 142,344 L 158,344 Z" fill="#F0A02A"/>
+<text class="val" x="170" y="340" fill="#F0A02A">tempo de trânsito</text>
+<g transform="translate(156,464)">
+<clipPath id="cC"><path d="M -40,-70 C 26,-52 64,-12 60,28 C 57,60 34,78 8,82 C 34,38 30,-26 -40,-70 Z"/></clipPath>
+<path d="M -40,-70 C 26,-52 64,-12 60,28 C 57,60 34,78 8,82 C 34,38 30,-26 -40,-70 Z" fill="url(#gC)" stroke="#F4767A" stroke-width="3.2" stroke-linejoin="round"/>
+<g clip-path="url(#cC)">
+<path d="M -60,-86 C -30,-40 -20,10 -8,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M -49,-86 C -19,-40 -9,10 3,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M -38,-86 C -8,-40 2,10 14,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M -27,-86 C 3,-40 13,10 25,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M -16,-86 C 14,-40 24,10 36,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M -5,-86 C 25,-40 35,10 47,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M 6,-86 C 36,-40 46,10 58,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M 17,-86 C 47,-40 57,10 69,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M 28,-86 C 58,-40 68,10 80,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M 39,-86 C 69,-40 79,10 91,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+<path d="M 50,-86 C 80,-40 90,10 102,70" fill="none" stroke="#F4767A" stroke-width="1.5" opacity="0.42"/>
+</g>
+<path d="M -30,-58 C 18,-40 44,-8 44,20" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.22"/>
+</g>
+<text class="sname" x="242" y="452" fill="#F2EFE8">falcizada</text>
+<text class="val" x="242" y="472" fill="#F4767A">polímero rígido</text>
+<text class="val" x="242" y="492" fill="#93A19D">não deformável</text>
+<rect x="14" y="556" width="372" height="70" rx="10" fill="#141E1C" fill-opacity="1" stroke="#243230" stroke-width="1.2"/>
+<text class="mlab" x="30" y="580" fill="#93A19D">MUTAÇÃO</text>
+<text class="valb" x="30" y="602" fill="#F2EFE8">HbS: β6 Glu → Val  (GAG→GTG)</text>
+<text class="val" x="30" y="620" fill="#F4767A">β6 Glu → Lys = HbC, não é HbS</text>
+<path d="M 44,486 C 20,400 20,220 42,132" fill="none" stroke="#2DD4BF" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+<path d="M 42,118 L 34,134 L 50,134 Z" fill="#2DD4BF" opacity="0.85"/>
+<g transform="translate(24,392) rotate(-90)"><text class="cap2" x="0" y="0" fill="#2DD4BF">reversível com reoxigenação</text></g>
+</svg></div>
+</section><section class="panel" aria-labelledby="p2">
+  <div class="plabel" id="p2"><span class="pnum">2</span><span class="pbar">|</span><span class="pname">O FILTRO ESPLÊNICO</span></div>
+  <p class="note" style="border-left-color:#2DD4BF">Hemácia rígida não transpõe a fenda: retenção no cordão</p>
+  <div class="fig"><svg role="img" aria-labelledby="t2 d2" viewBox="0 0 400 640" preserveAspectRatio="xMidYMid meet"><title id="t2">Painel 2: O filtro esplênico</title><desc id="d2">Cordão de Billroth reticular com macrófago, parede do seio venoso com células em estiva, hemácia flexível atravessando a fenda interendotelial e hemácia falcizada retida no cordão.</desc>
+<defs>
+<radialGradient id="rbcG" cx="36%" cy="30%" r="70%"><stop offset="0" stop-color="#2DD4BF" stop-opacity="0.087"/><stop offset="1" stop-color="#2DD4BF" stop-opacity="0.377"/></radialGradient>
+<linearGradient id="lum" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2DD4BF" stop-opacity="0.145"/><stop offset="1" stop-color="#2DD4BF" stop-opacity="0.043"/></linearGradient>
+<linearGradient id="stave" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2DD4BF" stop-opacity="0.232"/><stop offset="1" stop-color="#2DD4BF" stop-opacity="0.072"/></linearGradient>
+<g id="rbc2"><ellipse rx="15" ry="12" fill="url(#rbcG)" stroke="#2DD4BF" stroke-width="1.9"/><ellipse rx="6.5" ry="5" fill="#2DD4BF" fill-opacity="0.290"/></g>
+<g id="sk2"><path d="M -15,-17 C 5,-12 15,-2 13,8 C 12,15 6,20 -1,22 C 8,9 7,-5 -15,-17 Z" fill="#F4767A" fill-opacity="0.261" stroke="#F4767A" stroke-width="2" stroke-linejoin="round"/></g>
+<clipPath id="cordC"><rect x="14" y="40" width="372" height="272" rx="14"/></clipPath>
+</defs>
+<g clip-path="url(#cordC)" opacity="0.9">
+<path d="M 14,42 Q 39,30 52,27" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 14,42 Q 13,52 9,71" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 14,42 Q 33,57 53,67" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 52,27 Q 73,34 86,33" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 52,27 Q 54,44 53,67" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 52,27 Q 65,52 89,67" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 86,33 Q 104,27 124,27" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 86,33 Q 88,55 89,67" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 86,33 Q 103,54 124,72" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 124,27 Q 146,28 156,33" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 124,27 Q 131,56 124,72" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 124,27 Q 139,48 159,62" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 156,33 Q 170,32 196,33" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 156,33 Q 161,48 159,62" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 156,33 Q 177,47 201,73" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 196,33 Q 213,34 231,27" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 196,33 Q 197,49 201,73" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 196,33 Q 221,50 242,68" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 231,27 Q 262,31 283,33" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 231,27 Q 237,49 242,68" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 231,27 Q 258,51 282,63" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 283,33 Q 303,34 318,38" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 283,33 Q 287,46 282,63" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 283,33 Q 291,43 312,66" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 318,38 Q 343,35 354,26" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 318,38 Q 318,49 312,66" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 318,38 Q 342,45 363,64" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 354,26 Q 378,31 401,36" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 354,26 Q 353,44 363,64" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 354,26 Q 374,41 389,62" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 401,36 Q 399,50 389,62" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 9,71 Q 27,67 53,67" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 9,71 Q 0,83 -2,100" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 9,71 Q 28,95 46,110" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 53,67 Q 78,60 89,67" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 53,67 Q 51,94 46,110" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 53,67 Q 70,90 81,102" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 89,67 Q 101,75 124,72" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 89,67 Q 79,89 81,102" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 89,67 Q 98,88 119,100" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 124,72 Q 148,69 159,62" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 124,72 Q 119,87 119,100" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 124,72 Q 148,94 167,105" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 159,62 Q 183,70 201,73" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 159,62 Q 167,79 167,105" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 159,62 Q 172,82 197,97" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 201,73 Q 228,63 242,68" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 201,73 Q 202,86 197,97" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 201,73 Q 227,92 245,108" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 242,68 Q 266,64 282,63" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 242,68 Q 244,94 245,108" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 242,68 Q 268,78 285,99" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 282,63 Q 299,66 312,66" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 282,63 Q 279,86 285,99" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 282,63 Q 295,82 319,112" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 312,66 Q 344,66 363,64" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 312,66 Q 316,93 319,112" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 312,66 Q 336,90 359,112" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 363,64 Q 380,67 389,62" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 363,64 Q 362,92 359,112" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 363,64 Q 383,94 390,113" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 389,62 Q 390,85 390,113" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M -2,100 Q 22,112 46,110" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M -2,100 Q -8,115 -2,137" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M -2,100 Q 22,122 36,145" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 46,110 Q 64,102 81,102" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 46,110 Q 43,134 36,145" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 46,110 Q 70,124 87,148" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 81,102 Q 102,105 119,100" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 81,102 Q 78,131 87,148" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 81,102 Q 108,124 128,147" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 119,100 Q 141,97 167,105" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 119,100 Q 124,128 128,147" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 119,100 Q 143,122 163,148" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 167,105 Q 177,106 197,97" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 167,105 Q 158,131 163,148" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 167,105 Q 189,115 205,136" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 197,97 Q 225,104 245,108" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 197,97 Q 207,118 205,136" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 197,97 Q 218,114 249,137" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 245,108 Q 265,110 285,99" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 245,108 Q 249,124 249,137" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 245,108 Q 258,123 273,131" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 285,99 Q 301,103 319,112" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 285,99 Q 272,113 273,131" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 285,99 Q 295,116 317,134" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 319,112 Q 345,116 359,112" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 319,112 Q 323,119 317,134" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 319,112 Q 343,126 365,147" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 359,112 Q 373,118 390,113" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 359,112 Q 356,131 365,147" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 359,112 Q 371,128 391,132" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 390,113 Q 393,129 391,132" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M -2,137 Q 12,144 36,145" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M -2,137 Q 6,151 7,168" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M -2,137 Q 23,163 46,180" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 36,145 Q 60,143 87,148" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 36,145 Q 36,156 46,180" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 36,145 Q 53,158 80,173" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 87,148 Q 106,142 128,147" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 87,148 Q 81,161 80,173" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 87,148 Q 108,164 130,173" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 128,147 Q 151,151 163,148" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 128,147 Q 133,157 130,173" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 128,147 Q 148,168 159,181" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 163,148 Q 189,147 205,136" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 163,148 Q 163,158 159,181" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 163,148 Q 188,170 207,181" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 205,136 Q 226,133 249,137" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 205,136 Q 208,154 207,181" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 205,136 Q 230,155 243,172" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 249,137 Q 268,135 273,131" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 249,137 Q 250,151 243,172" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 249,137 Q 261,160 282,180" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 273,131 Q 299,127 317,134" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 273,131 Q 276,149 282,180" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 273,131 Q 303,155 321,169" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 317,134 Q 346,136 365,147" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 317,134 Q 321,149 321,169" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 317,134 Q 330,148 353,172" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 365,147 Q 384,133 391,132" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 365,147 Q 355,163 353,172" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 365,147 Q 381,164 401,175" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 391,132 Q 395,151 401,175" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 7,168 Q 28,168 46,180" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 7,168 Q 3,195 7,215" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 7,168 Q 17,185 38,211" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 46,180 Q 59,171 80,173" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 46,180 Q 47,196 38,211" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 46,180 Q 64,199 81,210" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 80,173 Q 99,175 130,173" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 80,173 Q 80,193 81,210" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 80,173 Q 97,187 129,204" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 130,173 Q 146,170 159,181" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 130,173 Q 136,189 129,204" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 130,173 Q 155,192 170,201" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 159,181 Q 183,175 207,181" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 159,181 Q 169,194 170,201" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 159,181 Q 187,197 202,210" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 207,181 Q 229,173 243,172" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 207,181 Q 210,189 202,210" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 207,181 Q 219,197 235,210" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 243,172 Q 269,172 282,180" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 243,172 Q 239,187 235,210" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 243,172 Q 255,185 278,208" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 282,180 Q 295,171 321,169" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 282,180 Q 275,198 278,208" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 282,180 Q 296,194 322,200" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 321,169 Q 340,165 353,172" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 321,169 Q 327,181 322,200" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 321,169 Q 335,197 355,214" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 353,172 Q 372,179 401,175" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 353,172 Q 360,200 355,214" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 353,172 Q 375,187 390,216" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 401,175 Q 396,192 390,216" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 7,215 Q 20,213 38,211" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 7,215 Q 5,232 1,247" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 7,215 Q 19,233 39,243" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 38,211 Q 64,210 81,210" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 38,211 Q 33,227 39,243" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 38,211 Q 67,229 83,236" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 81,210 Q 109,212 129,204" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 81,210 Q 84,221 83,236" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 81,210 Q 97,228 127,244" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 129,204 Q 155,205 170,201" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 129,204 Q 123,218 127,244" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 129,204 Q 151,223 165,245" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 170,201 Q 187,201 202,210" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 170,201 Q 166,221 165,245" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 170,201 Q 183,221 202,244" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 202,210 Q 225,205 235,210" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 202,210 Q 199,225 202,244" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 202,210 Q 224,226 236,251" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 235,210 Q 256,210 278,208" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 235,210 Q 237,226 236,251" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 235,210 Q 252,234 272,251" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 278,208 Q 299,211 322,200" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 278,208 Q 268,224 272,251" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 278,208 Q 296,229 325,244" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 322,200 Q 336,209 355,214" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 322,200 Q 322,229 325,244" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 322,200 Q 340,229 362,247" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 355,214 Q 377,213 390,216" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 355,214 Q 361,234 362,247" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 355,214 Q 371,226 398,240" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 390,216 Q 390,223 398,240" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 1,247 Q 15,243 39,243" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 1,247 Q 5,264 3,276" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 1,247 Q 27,274 41,287" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 39,243 Q 65,243 83,236" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 39,243 Q 37,261 41,287" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 39,243 Q 62,261 81,277" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 83,236 Q 108,236 127,244" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 83,236 Q 76,253 81,277" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 83,236 Q 102,264 122,285" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 127,244 Q 148,242 165,245" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 127,244 Q 118,263 122,285" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 127,244 Q 147,260 162,280" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 165,245 Q 187,248 202,244" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 165,245 Q 166,265 162,280" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 165,245 Q 181,266 197,275" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 202,244 Q 215,249 236,251" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 202,244 Q 201,257 197,275" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 202,244 Q 215,263 233,274" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 236,251 Q 252,252 272,251" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 236,251 Q 233,262 233,274" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 236,251 Q 256,264 275,285" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 272,251 Q 298,248 325,244" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 272,251 Q 278,270 275,285" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 272,251 Q 295,260 318,272" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 325,244 Q 346,245 362,247" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 325,244 Q 317,252 318,272" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 325,244 Q 338,256 356,272" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 362,247 Q 376,240 398,240" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 362,247 Q 356,256 356,272" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 362,247 Q 383,256 397,278" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 398,240 Q 397,265 397,278" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 3,276 Q 20,288 41,287" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 3,276 Q 12,298 12,310" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 3,276 Q 23,297 51,309" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 41,287 Q 67,276 81,277" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 41,287 Q 48,297 51,309" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 41,287 Q 68,301 93,316" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 81,277 Q 105,276 122,285" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 81,277 Q 81,290 93,316" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 81,277 Q 92,298 115,320" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 122,285 Q 135,282 162,280" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 122,285 Q 114,303 115,320" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 122,285 Q 134,304 158,312" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 162,280 Q 175,280 197,275" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 162,280 Q 156,296 158,312" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 162,280 Q 175,299 195,320" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 197,275 Q 211,281 233,274" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 197,275 Q 193,304 195,320" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 197,275 Q 220,294 233,318" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 233,274 Q 253,285 275,285" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 233,274 Q 231,294 233,318" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 233,274 Q 260,290 277,317" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 275,285 Q 292,273 318,272" fill="none" stroke="#6E7A76" stroke-width="1.0" opacity="0.75"/>
+<path d="M 275,285 Q 270,299 277,317" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 275,285 Q 300,298 314,306" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 318,272 Q 335,270 356,272" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 318,272 Q 312,282 314,306" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 318,272 Q 347,288 364,317" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 356,272 Q 373,279 397,278" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 356,272 Q 361,298 364,317" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 356,272 Q 368,303 390,323" fill="none" stroke="#6E7A76" stroke-width="0.9" opacity="0.75"/>
+<path d="M 397,278 Q 400,305 390,323" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 12,310 Q 37,308 51,309" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 51,309 Q 72,314 93,316" fill="none" stroke="#6E7A76" stroke-width="1.2" opacity="0.75"/>
+<path d="M 93,316 Q 109,315 115,320" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 115,320 Q 130,309 158,312" fill="none" stroke="#6E7A76" stroke-width="1.6" opacity="0.75"/>
+<path d="M 158,312 Q 174,314 195,320" fill="none" stroke="#6E7A76" stroke-width="1.7" opacity="0.75"/>
+<path d="M 195,320 Q 217,314 233,318" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+<path d="M 233,318 Q 255,319 277,317" fill="none" stroke="#6E7A76" stroke-width="1.1" opacity="0.75"/>
+<path d="M 277,317 Q 293,318 314,306" fill="none" stroke="#6E7A76" stroke-width="1.4" opacity="0.75"/>
+<path d="M 314,306 Q 340,314 364,317" fill="none" stroke="#6E7A76" stroke-width="1.5" opacity="0.75"/>
+<path d="M 364,317 Q 373,324 390,323" fill="none" stroke="#6E7A76" stroke-width="1.3" opacity="0.75"/>
+</g>
+<rect x="14" y="40" width="372" height="272" rx="14" fill="none" stroke="#243230" stroke-width="1.2"/>
+<text class="sname" x="20" y="30" fill="#F2EFE8">Cordão de Billroth</text>
+<rect x="200" y="12" width="186" height="24" rx="12" fill="#F0A02A" fill-opacity="0.116" stroke="#F0A02A" stroke-width="1"/>
+<text class="cap2" x="293" y="29" text-anchor="middle" fill="#F0A02A">pO<tspan dy="3" font-size="7.5">2</tspan><tspan dy="-3"> baixa | pH ácido | estase</tspan></text>
+<use href="#rbc2" transform="translate(54,88)"/>
+<use href="#rbc2" transform="translate(44,208)"/>
+<use href="#rbc2" transform="translate(108,140)"/>
+<use href="#sk2" transform="translate(206,70) rotate(22)"/>
+<use href="#sk2" transform="translate(330,118) rotate(-30)"/>
+<use href="#sk2" transform="translate(352,236) rotate(112)"/>
+<use href="#sk2" transform="translate(240,196) rotate(168)"/>
+<path d="M 92,258 C 108,246 130,250 138,264 C 148,280 138,300 120,302 C 104,304 88,294 86,280 C 85,270 86,262 92,258 Z" fill="#6E7A76" fill-opacity="0.435" stroke="#93A19D" stroke-width="1.6"/>
+<ellipse cx="114" cy="276" rx="11" ry="8" fill="#93A19D" fill-opacity="0.652"/>
+<text class="cap2" x="150" y="292" fill="#93A19D">macrófago cordonal</text>
+<use href="#sk2" transform="translate(306,288) rotate(96) scale(1.7)"/>
+<path d="M 18,322 h 66 a 10,10 0 0 1 10,10 v 32 a 10,10 0 0 1 -10,10 h -66 a 10,10 0 0 1 -10,-10 v -32 a 10,10 0 0 1 10,-10 z" fill="url(#stave)" stroke="#2DD4BF" stroke-width="2.2"/>
+<ellipse cx="51" cy="348" rx="10" ry="6.5" fill="#2DD4BF" fill-opacity="0.464" stroke="#2DD4BF" stroke-width="1.2"/>
+<path d="M 92,322 h 66 a 10,10 0 0 1 10,10 v 32 a 10,10 0 0 1 -10,10 h -66 a 10,10 0 0 1 -10,-10 v -32 a 10,10 0 0 1 10,-10 z" fill="url(#stave)" stroke="#2DD4BF" stroke-width="2.2"/>
+<ellipse cx="125" cy="348" rx="10" ry="6.5" fill="#2DD4BF" fill-opacity="0.464" stroke="#2DD4BF" stroke-width="1.2"/>
+<path d="M 166,322 h 66 a 10,10 0 0 1 10,10 v 32 a 10,10 0 0 1 -10,10 h -66 a 10,10 0 0 1 -10,-10 v -32 a 10,10 0 0 1 10,-10 z" fill="url(#stave)" stroke="#2DD4BF" stroke-width="2.2"/>
+<ellipse cx="199" cy="348" rx="10" ry="6.5" fill="#2DD4BF" fill-opacity="0.464" stroke="#2DD4BF" stroke-width="1.2"/>
+<path d="M 240,322 h 66 a 10,10 0 0 1 10,10 v 32 a 10,10 0 0 1 -10,10 h -66 a 10,10 0 0 1 -10,-10 v -32 a 10,10 0 0 1 10,-10 z" fill="url(#stave)" stroke="#2DD4BF" stroke-width="2.2"/>
+<ellipse cx="273" cy="348" rx="10" ry="6.5" fill="#2DD4BF" fill-opacity="0.464" stroke="#2DD4BF" stroke-width="1.2"/>
+<path d="M 314,322 h 66 a 10,10 0 0 1 10,10 v 32 a 10,10 0 0 1 -10,10 h -66 a 10,10 0 0 1 -10,-10 v -32 a 10,10 0 0 1 10,-10 z" fill="url(#stave)" stroke="#2DD4BF" stroke-width="2.2"/>
+<ellipse cx="347" cy="348" rx="10" ry="6.5" fill="#2DD4BF" fill-opacity="0.464" stroke="#2DD4BF" stroke-width="1.2"/>
+<path d="M 162,272 C 198,282 204,318 166,340 C 162,344 162,354 166,358 C 204,380 198,416 162,426 C 126,416 120,380 158,358 C 162,354 162,344 158,340 C 120,318 126,282 162,272 Z" fill="url(#rbcG)" stroke="#2DD4BF" stroke-width="2.6" stroke-linejoin="round"/>
+<g stroke="#F4767A" stroke-width="4" stroke-linecap="round"><line x1="300" y1="340" x2="316" y2="356"/><line x1="316" y1="340" x2="300" y2="356"/></g>
+<polyline points="88,320 88,236 122,236" fill="none" stroke="#93A19D" stroke-width="1.0" opacity="0.85"/>
+<rect x="122" y="196" width="158" height="52" fill="#0D1413" opacity="0.94"/>
+<text class="sname" x="126" y="216" fill="#F2EFE8">Fenda interendotelial</text>
+<text class="valb" x="126" y="238" fill="#F2EFE8">0,25–1,2 µm</text>
+<rect x="14" y="382" width="372" height="124" rx="18" fill="url(#lum)" stroke="#2DD4BF" stroke-width="1.4" stroke-opacity="0.5"/>
+<use href="#rbc2" transform="translate(236,440)"/>
+<use href="#rbc2" transform="translate(292,440)"/>
+<use href="#rbc2" transform="translate(348,440)"/>
+<path d="M 56,478 L 332,478" stroke="#2DD4BF" stroke-width="2" opacity="0.5"/>
+<path d="M 340,478 L 326,471 L 326,485 Z" fill="#2DD4BF" opacity="0.5"/>
+<polyline points="300,430 340,404 366,404" fill="none" stroke="#2DD4BF" stroke-width="1.0" opacity="0.6"/>
+<text class="sname" x="386" y="398" text-anchor="end" fill="#F2EFE8">Seio venoso</text>
+<text class="cap2" x="386" y="524" text-anchor="end" fill="#2DD4BF">retorno à circulação</text>
+<line x1="16" y1="562" x2="136" y2="562" stroke="#2DD4BF" stroke-width="6" stroke-linecap="round"/>
+<text class="val" x="148" y="566" fill="#93A19D">hemácia 7,5 µm</text>
+<line x1="16" y1="592" x2="35" y2="592" stroke="#F4767A" stroke-width="6" stroke-linecap="round"/>
+<text class="val" x="148" y="596" fill="#93A19D">fenda 1,2 µm</text>
+<text class="cap2" x="16" y="622" fill="#93A19D">mesma escala: a fenda é seis vezes menor que a célula</text>
+</svg></div>
+</section><section class="panel" aria-labelledby="p3">
+  <div class="plabel" id="p3"><span class="pnum">3</span><span class="pbar">|</span><span class="pname">VÁLVULA UNIDIRECIONAL</span></div>
+  <p class="note" style="border-left-color:#F0A02A">Entrada livre | Saída bloqueada → ingurgitamento em horas</p>
+  <div class="fig"><svg role="img" aria-labelledby="t3 d3" viewBox="0 0 400 640" preserveAspectRatio="xMidYMid meet"><title id="t3">Painel 3: Válvula unidirecional</title><desc id="d3">Baço agudamente ingurgitado com contorno do tamanho basal, artéria e veia esplênicas no mesmo hilo, entrada livre e saída bloqueada.</desc>
+<defs>
+<path id="spl" d="M 52,3 C 80,6 97,40 96,82 C 95,124 74,157 46,157 C 24,157 7,139 6,113 C 5,93 16,82 28,71 C 42,58 41,40 31,27 C 23,17 33,1 52,3 Z"/>
+<linearGradient id="pulp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4767A" stop-opacity="0.290"/><stop offset="1" stop-color="#F4767A" stop-opacity="0.145"/></linearGradient>
+<clipPath id="bigClip"><use href="#spl" transform="translate(78,92) scale(2.66)"/></clipPath>
+<g id="sk3"><path d="M -15,-17 C 5,-12 15,-2 13,8 C 12,15 6,20 -1,22 C 8,9 7,-5 -15,-17 Z" transform="scale(0.60)" fill="#F4767A" fill-opacity="0.609" stroke="#F4767A" stroke-width="2.6" stroke-linejoin="round"/></g>
+<g id="plt"><path d="M 0,-6.5 L 5.6,3.2 L -5.6,3.2 Z" fill="#F0A02A" fill-opacity="0.870" stroke="#F0A02A" stroke-width="1.1"/></g>
+</defs>
+<text class="sname" x="200" y="28" text-anchor="middle" fill="#F4767A">Esplenomegalia aguda</text>
+<use href="#spl" transform="translate(78,92) scale(2.66)" fill="url(#pulp)" stroke="#F4767A" stroke-width="3" stroke-linejoin="round"/>
+<use href="#spl" transform="translate(80,94) scale(2.567)" fill="none" stroke="#F4767A" stroke-width="1.1" stroke-opacity="0.45"/>
+<use href="#sk3" transform="translate(114.1,412.8) rotate(58)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(120.9,392.9) rotate(13)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(119.4,134.9) rotate(27)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(223.2,154.8) rotate(52)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(143.1,469.4) rotate(351)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(218.0,389.7) rotate(310)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(215.7,257.5) rotate(254)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(297.5,334.4) rotate(324)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(190.2,184.8) rotate(117)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(249.6,310.1) rotate(90)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(220.0,316.4) rotate(313)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(296.4,446.6) rotate(218)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(301.2,236.4) rotate(332)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(299.8,159.4) rotate(129)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(141.4,262.9) rotate(149)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(141.5,237.0) rotate(258)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(191.4,392.8) rotate(318)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(271.4,311.8) rotate(60)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(271.1,234.4) rotate(95)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(196.4,212.4) rotate(5)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(171.6,467.0) rotate(201)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(88.9,131.8) rotate(333)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(164.4,132.3) rotate(204)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(87.3,184.6) rotate(54)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(86.4,152.1) rotate(249)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(91.6,230.4) rotate(234)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(196.4,419.3) rotate(38)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(275.6,437.6) rotate(329)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(118.3,230.9) rotate(238)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(117.2,442.5) rotate(177)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(164.8,281.5) rotate(124)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(86.5,210.4) rotate(58)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(301.7,386.3) rotate(168)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(164.2,315.7) rotate(132)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(245.1,393.2) rotate(84)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(169.9,442.2) rotate(233)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(90.4,259.5) rotate(238)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(272.7,472.1) rotate(344)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(270.1,203.4) rotate(349)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(190.2,285.2) rotate(168)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(170.7,179.5) rotate(258)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(189.3,443.1) rotate(135)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(218.7,236.7) rotate(156)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(267.6,127.5) rotate(204)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(114.3,311.0) rotate(353)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(166.5,229.1) rotate(15)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(85.1,100.1) rotate(167)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(190.4,310.8) rotate(121)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(138.9,108.2) rotate(290)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(296.8,413.3) rotate(342)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(143.0,132.0) rotate(170)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(117.5,341.4) rotate(29)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(166.8,257.8) rotate(214)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(218.5,210.0) rotate(212)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(142.6,282.2) rotate(245)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(139.8,440.7) rotate(280)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(85.9,307.2) rotate(167)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(242.0,208.7) rotate(198)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(241.5,446.5) rotate(276)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(221.2,285.8) rotate(10)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(88.6,394.6) rotate(86)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(247.7,286.2) rotate(248)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(217.8,334.8) rotate(352)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(163.5,339.1) rotate(340)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(302.1,285.3) rotate(101)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(194.2,106.2) rotate(350)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(268.7,411.9) rotate(100)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(297.2,134.4) rotate(163)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(297.5,207.0) rotate(57)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(94.4,337.0) rotate(217)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(271.8,339.9) rotate(141)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(248.8,127.3) rotate(247)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(246.4,180.2) rotate(345)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(171.2,388.0) rotate(46)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(170.7,212.9) rotate(237)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(138.0,316.8) rotate(217)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(302.1,262.4) rotate(99)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(298.9,367.7) rotate(13)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(146.1,183.5) rotate(338)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(111.4,284.4) rotate(250)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(198.0,465.6) rotate(225)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(217.0,107.1) rotate(37)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(296.2,102.9) rotate(324)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(218.0,472.1) rotate(144)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(117.7,463.9) rotate(167)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(217.0,179.1) rotate(200)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(114.6,101.0) rotate(161)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(247.1,159.5) rotate(343)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(242.9,232.7) rotate(168)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(196.1,364.4) rotate(244)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(274.3,388.4) rotate(278)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(140.4,366.1) rotate(336)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(145.5,389.8) rotate(61)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(218.6,129.0) rotate(122)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(138.0,155.0) rotate(342)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(89.1,291.0) rotate(218)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(113.2,211.0) rotate(134)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(276.8,107.0) rotate(317)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(271.4,256.4) rotate(43)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(218.8,444.6) rotate(91)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(119.7,183.5) rotate(25)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(163.4,100.1) rotate(241)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(193.6,132.2) rotate(175)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(193.7,152.3) rotate(110)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(297.2,466.1) rotate(158)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(243.4,418.1) rotate(91)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(142.0,418.9) rotate(255)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(87.1,413.2) rotate(273)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(195.9,234.8) rotate(137)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(87.0,362.3) rotate(313)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(120.6,368.8) rotate(16)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(165.1,360.9) rotate(204)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(298.6,314.8) rotate(55)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(244.9,339.8) rotate(42)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(215.3,363.8) rotate(201)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(146.9,205.0) rotate(31)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(138.2,334.9) rotate(27)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(246.5,361.2) rotate(48)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(246.8,103.0) rotate(136)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(90.8,442.5) rotate(299)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(268.4,177.5) rotate(104)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(246.4,264.4) rotate(44)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(94.5,471.4) rotate(276)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(117.4,257.2) rotate(294)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(293.4,184.3) rotate(359)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(276.0,367.3) rotate(18)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(247.8,466.2) rotate(59)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(190.7,263.5) rotate(156)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(164.8,415.5) rotate(357)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(169.9,160.7) rotate(194)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(111.3,158.4) rotate(318)" clip-path="url(#bigClip)"/>
+<use href="#plt" transform="translate(215.1,411.0) rotate(81)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(271.9,161.0) rotate(169)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(267.2,289.0) rotate(247)" clip-path="url(#bigClip)"/>
+<use href="#sk3" transform="translate(192.1,337.3) rotate(82)" clip-path="url(#bigClip)"/>
+<use href="#spl" transform="translate(82.5,92.9) scale(1.756)" fill="none" stroke="#0D1413" stroke-width="6" stroke-opacity="0.9"/>
+<use href="#spl" transform="translate(82.5,92.9) scale(1.756)" fill="none" stroke="#9AA69F" stroke-width="1.8" stroke-dasharray="8 6"/>
+<path d="M 96,300 C 118,306 130,314 142,324" fill="none" stroke="#F0A02A" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
+<path d="M 96,352 C 118,348 130,344 142,338" fill="none" stroke="#7E93A6" stroke-width="7" stroke-linecap="round" opacity="0.5"/>
+<path d="M 8,300 L 88,300" stroke="#F0A02A" stroke-width="14" stroke-linecap="round"/>
+<path d="M 110,300 L 84,285 L 84,315 Z" fill="#F0A02A"/>
+<path d="M 8,352 L 92,352" stroke="#7E93A6" stroke-width="14" stroke-linecap="round" opacity="0.6"/>
+<circle cx="48" cy="352" r="21" fill="#0D1413" stroke="#F4767A" stroke-width="4.2"/>
+<line x1="33.5" y1="366.5" x2="62.5" y2="337.5" stroke="#F4767A" stroke-width="4.2" stroke-linecap="round"/>
+<text class="sname" x="8" y="282" fill="#F0A02A">Artéria: entrada livre</text>
+<text class="sname" x="8" y="392" fill="#93A19D">Veia: saída bloqueada</text>
+<text class="cap2" x="118" y="330" fill="#F2EFE8">hilo</text>
+<polyline points="246,152 292,126 322,126" fill="none" stroke="#9AA69F" stroke-width="1.0" opacity="0.85"/>
+<text class="sname" x="326" y="122" text-anchor="end" fill="#93A19D">Tamanho basal</text>
+<text class="valb" x="200" y="576" text-anchor="middle" fill="#F4767A">até metade da volemia sequestrada</text>
+<text class="cap2" x="200" y="600" text-anchor="middle" fill="#93A19D">hemácias falcizadas e plaquetas retidas</text>
+<text class="cap2" x="200" y="622" text-anchor="middle" fill="#93A19D">principal causa de morte súbita antes dos 5 anos</text>
+</svg></div>
+</section><section class="panel" aria-labelledby="p4">
+  <div class="plabel" id="p4"><span class="pnum">4</span><span class="pbar">|</span><span class="pname">CHOQUE HIPOVOLÊMICO</span></div>
+  <p class="note" style="border-left-color:#F4767A">Hipovolemia → hipóxia → mais falcização</p>
+  <div class="fig"><svg role="img" aria-labelledby="t4 d4" viewBox="0 0 400 640" preserveAspectRatio="xMidYMid meet"><title id="t4">Painel 4: Choque hipovolêmico</title><desc id="d4">Criança pálida com baço palpável, cartão laboratorial com queda de hemoglobina e plaquetas e elevação de reticulócitos, e ciclo de retroalimentação da hipovolemia.</desc>
+<defs>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/></filter>
+</defs>
+<path d="M 62,54 C 62,32 106,32 106,54 C 106,60 104,64 104,68 L 64,68 C 64,64 62,60 62,54 Z" fill="#F2EFE8" fill-opacity="0.85"/>
+<circle cx="84" cy="66" r="30" fill="#1A2422" stroke="#F2EFE8" stroke-width="2.2"/>
+<path d="M 60,52 C 66,36 102,36 108,52 C 104,44 96,40 84,40 C 72,40 64,44 60,52 Z" fill="#F2EFE8" fill-opacity="0.85"/>
+<path d="M 72,62 a 4,3 0 0 1 8,0" fill="none" stroke="#F2EFE8" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M 88,62 a 4,3 0 0 1 8,0" fill="none" stroke="#F2EFE8" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M 78,80 L 90,80" stroke="#F2EFE8" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M 84,96 C 104,96 120,108 122,128 L 126,176 C 127,186 114,188 112,178 L 108,150 L 108,206 L 60,206 L 60,150 L 56,178 C 54,188 41,186 42,176 L 46,128 C 48,108 64,96 84,96 Z" fill="#141E1C" fill-opacity="1" stroke="#F2EFE8" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M 60,206 L 108,206 L 106,246 L 88,246 L 86,222 L 82,246 L 62,246 Z" fill="#6E7A76" fill-opacity="0.507" stroke="#F2EFE8" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M 64,246 L 80,246 L 78,300 L 66,300 Z" fill="#1A2422" stroke="#F2EFE8" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M 88,246 L 104,246 L 102,300 L 90,300 Z" fill="#1A2422" stroke="#F2EFE8" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M 112,132 C 122,134 126,148 122,162 C 118,178 104,184 96,176 C 89,169 89,156 96,144 C 100,137 106,131 112,132 Z" fill="#F4767A" fill-opacity="0.435" stroke="#F4767A" stroke-width="2" stroke-dasharray="6 4"/>
+<circle cx="164" cy="96" r="3.6" fill="#F4767A"/>
+<text class="cap2" x="178" y="100" fill="#F4767A">palidez cutâneo-mucosa</text>
+<circle cx="164" cy="136" r="3.6" fill="#F4767A"/>
+<text class="cap2" x="178" y="140" fill="#F4767A">taquicardia | pulso fino</text>
+<circle cx="164" cy="176" r="3.6" fill="#F4767A"/>
+<text class="cap2" x="178" y="180" fill="#F4767A">baço palpável e doloroso</text>
+<circle cx="164" cy="216" r="3.6" fill="#93A19D"/>
+<text class="cap2" x="178" y="220" fill="#93A19D">enchimento capilar lento</text>
+<rect x="14" y="330" width="372" height="196" rx="16" fill="#141E1C" stroke="#243230" stroke-width="1.5" filter="url(#soft)"/>
+<text class="dlab" x="36" y="364" fill="#F2EFE8">Hb</text>
+<text class="val" x="36" y="382" fill="#F4767A">queda ≥ 2 g/dL do basal</text>
+<text class="arw" x="364" y="374" text-anchor="end" fill="#F4767A">↓↓</text>
+<line x1="36" y1="396" x2="364" y2="396" stroke="#243230" stroke-width="1"/>
+<text class="dlab" x="36" y="414" fill="#F2EFE8">Plaquetas</text>
+<text class="val" x="36" y="432" fill="#F4767A">queda frequente | < 50 mil se grave</text>
+<text class="arw" x="364" y="424" text-anchor="end" fill="#F4767A">↓↓</text>
+<line x1="36" y1="446" x2="364" y2="446" stroke="#243230" stroke-width="1"/>
+<text class="dlab" x="36" y="464" fill="#F2EFE8">Reticulócitos</text>
+<text class="val" x="36" y="482" fill="#2DD4BF">resposta medular preservada</text>
+<text class="arw" x="364" y="474" text-anchor="end" fill="#2DD4BF">↑↑</text>
+<line x1="36" y1="496" x2="364" y2="496" stroke="#243230" stroke-width="1"/>
+<text class="cap2" x="30" y="510" fill="#2DD4BF">reticulócitos altos afastam crise aplástica (B19)</text>
+<path d="M 211.3,547.0 A 33,33 0 1 1 188.7,547.0" fill="none" stroke="#F4767A" stroke-width="2.8" stroke-linecap="round"/>
+<path d="M 196.2,544.3 L 187.9,553.7 L 183.8,542.4 Z" fill="#F4767A"/>
+<text class="cap2" x="200" y="532" text-anchor="middle" fill="#F4767A">hipovolemia</text>
+<text class="cap2" x="244" y="582" fill="#F4767A">hipóxia</text>
+<text class="cap2" x="200" y="632" text-anchor="middle" fill="#F4767A">mais falcização</text>
+</svg></div>
+</section></div>
+    <footer class="band">
+      <div>
+        <div class="l1"><em>REVERSÃO:</em> AUTOTRANSFUSÃO ESPLÊNICA → RISCO DE HIPERVISCOSIDADE.</div>
+        <div class="l2">TRANSFUNDIR <b>5 mL/kg</b><span class="sep">|</span>ALVO <b>Hb 7–8 g/dL</b><span class="sep">|</span>NUNCA O VALOR BASAL</div>
+      </div>
+      <div class="bandside">
+        <div class="src">Pivkin PNAS 2016 · Brousse Br J Haematol 2014 · ASH Blood Adv 2020</div>
+        <div class="sig">MedRam · Memória Clínica</div>
+      </div>
+    </footer>
+  </div>
+</div>
+<script>
+(function () {
+  var v = document.getElementById('viewport');
+  function fit() { v.style.transform = 'scale(' + Math.min(innerWidth / 1920, innerHeight / 1080) + ')'; }
+  addEventListener('resize', fit); fit();
+})();
+</script>
+</body></html>
