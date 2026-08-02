@@ -19,8 +19,34 @@ No ar. Cada peça tem endereço próprio e permanente:
 
 Cada peça mora na própria pasta, com tudo que precisa dentro dela, e o arquivo principal chama-se sempre `index.html` — é isso que deixa a URL limpa (`…/cards/hipocalemia-ppt/`, sem `.html` no fim).
 
+## 🩺 Peças
+
+### Hipocalemia grave e paralisia periódica tireotóxica
+
+`cards/hipocalemia-ppt/` — ECG de 12 derivações, batimento esquemático em SVG com a fusão T–U, os cinco achados eletrocardiográficos, a bomba Na⁺/K⁺-ATPase por trás do shift, e o ponto que muda conduta: repor K⁺ com cautela, porque o potássio corporal total é normal e o rebote é real.
+
+O card é um Design Component — o template fica no `<x-dc>` e a lógica numa classe `DCLogic`, que expõe três props compiladas em CSS custom properties:
+
+| Prop | Valores | Efeito |
+| --- | --- | --- |
+| `paletteLead` | `Terracota` · `Sálvia` | qual das duas paletas lidera |
+| `shapeStyle` | `Redondo` · `Suave` · `Nítido` | escala de border-radius |
+| `decorShapes` | `true` · `false` | formas decorativas de fundo |
+
+## 📖 Fontes e direitos
+
+Cada peça cita a literatura que a sustenta, ao lado da afirmação — não numa lista solta no rodapé.
+
+O ECG do card de hipocalemia é o **caso 183** do [ECG Wave-Maven](https://ecg.bidmc.harvard.edu), do Beth Israel Deaconess Medical Center: K⁺ 1,9 mEq/L, taquicardia sinusal em repouso com prolongamento do PR, ondas P em DII sobrepostas às ondas TU, ondas U muito amplas em V3–V4, paralisia periódica tireotóxica. Imagem © Beth Israel Deaconess Medical Center, creditada na legenda do card.
+
+---
+
+Material de estudo. Não se destina a orientar conduta em paciente individual.
+
 <details>
-<summary>Estrutura de pastas</summary>
+<summary>Para quem edita o repositório</summary>
+
+**Estrutura**
 
 ```
 index.html                        galeria (a página que o Pages serve)
@@ -38,25 +64,8 @@ infograficos/
   sequestro-esplenico/index.html
 ```
 
-</details>
-
-## 🩺 Peças
-
-### Hipocalemia grave e paralisia periódica tireotóxica
-
-`cards/hipocalemia-ppt/` — ECG de 12 derivações, batimento esquemático em SVG com a fusão T–U, os cinco achados eletrocardiográficos, a bomba Na⁺/K⁺-ATPase por trás do shift, e o ponto que muda conduta: repor K⁺ com cautela, porque o potássio corporal total é normal e o rebote é real.
-
-O card é um Design Component — o template fica no `<x-dc>` e a lógica numa classe `DCLogic`, que expõe três props compiladas em CSS custom properties:
-
-| Prop | Valores | Efeito |
-| --- | --- | --- |
-| `paletteLead` | `Terracota` · `Sálvia` | qual das duas paletas lidera |
-| `shapeStyle` | `Redondo` · `Suave` · `Nítido` | escala de border-radius |
-| `decorShapes` | `true` · `false` | formas decorativas de fundo |
-
-## 🔧 Rodando localmente
-
-O runtime faz `fetch` do próprio arquivo, o que não funciona em `file://`. Sirva por HTTP:
+**Rodando localmente** — o runtime faz `fetch` do próprio arquivo, o que não
+funciona em `file://`. Sirva por HTTP:
 
 ```bash
 python3 -m http.server 8000
@@ -64,12 +73,4 @@ python3 -m http.server 8000
 # o card:   http://localhost:8000/cards/hipocalemia-ppt/
 ```
 
-## 📖 Fontes e direitos
-
-Cada peça cita a literatura que a sustenta, ao lado da afirmação — não numa lista solta no rodapé.
-
-O ECG do card de hipocalemia é o **caso 183** do [ECG Wave-Maven](https://ecg.bidmc.harvard.edu), do Beth Israel Deaconess Medical Center: K⁺ 1,9 mEq/L, taquicardia sinusal em repouso com prolongamento do PR, ondas P em DII sobrepostas às ondas TU, ondas U muito amplas em V3–V4, paralisia periódica tireotóxica. Imagem © Beth Israel Deaconess Medical Center, creditada na legenda do card.
-
----
-
-Material de estudo. Não se destina a orientar conduta em paciente individual.
+</details>
