@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedRam Cards — baralho de Anki em preparação</title>
+<meta name="description" content="Sistema de revisão médica em Anki com o padrão editorial do MedRam: cada afirmação com a referência ao lado. Cerca de 8.000 flashcards em revisão. Veja a amostra.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+<style>
+  :root{
+    --bg:#f7f6f2; --surface:#ffffff; --ink:#16211f; --muted:#5d6b68;
+    --line:#e2e0d8; --teal:#0f8a80; --teal-deep:#0a6660; --amber:#c07a2c;
+    --cloze-bg:#e6f4f2; --shadow:0 1px 2px rgba(16,33,31,.05), 0 8px 24px rgba(16,33,31,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e1614; --surface:#152220; --ink:#e8efed; --muted:#93a5a1;
+      --line:#243633; --teal:#3fb5a8; --teal-deep:#7ad6c9; --amber:#d99a4e;
+      --cloze-bg:#173330; --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  a{color:var(--teal-deep)}
+
+  .back{display:inline-block;margin-top:30px;font-size:14px;text-decoration:none;color:var(--muted)}
+  .back:hover{color:var(--teal-deep)}
+
+  header{padding:34px 0 46px;border-bottom:1px solid var(--line)}
+  .status{
+    display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:22px;
+  }
+  h1{font-size:clamp(32px,6vw,50px);line-height:1.08;margin:0 0 18px;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--teal-deep)}
+  .lede{font-size:clamp(16px,2vw,18.5px);color:var(--muted);margin:0;max-width:64ch}
+
+  .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .fact{
+    border:1px solid var(--line);background:var(--surface);border-radius:10px;
+    padding:12px 18px;font-size:14px;color:var(--muted);
+  }
+  .fact b{display:block;color:var(--ink);font-size:20px;font-weight:700;letter-spacing:-.01em}
+
+  section{padding:46px 0}
+  h2{font-size:23px;margin:0 0 10px;letter-spacing:-.01em}
+  .note{color:var(--muted);margin:0 0 26px;max-width:66ch;font-size:15px}
+
+  .deckcards{display:flex;flex-direction:column;gap:14px}
+  .fc{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;box-shadow:var(--shadow);cursor:pointer;
+    transition:border-color .15s ease;
+  }
+  .fc:hover{border-color:var(--teal)}
+  .fc .q{font-size:16.5px;line-height:1.55;margin:0}
+  .cloze{
+    display:inline-block;background:var(--cloze-bg);color:transparent;
+    border-bottom:2px solid var(--teal);border-radius:4px;padding:0 8px;
+    user-select:none;transition:color .12s ease;
+  }
+  .fc.open .cloze{color:var(--teal-deep);font-weight:600;user-select:auto}
+  .hint{margin:14px 0 0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .fc.open .hint{color:var(--teal-deep)}
+
+  .about{
+    border:1px solid var(--line);border-radius:14px;background:var(--surface);
+    padding:26px 28px;margin-top:34px;
+  }
+  .about h3{margin:0 0 12px;font-size:17px}
+  .about p{margin:0 0 12px;color:var(--muted);font-size:15px}
+  .about p:last-child{margin-bottom:0}
+
+  .soon{
+    border:1px dashed var(--line);border-radius:14px;background:var(--surface);
+    padding:26px 28px;margin-top:26px;
+  }
+  .soon h3{margin:0 0 10px;font-size:17px}
+  .soon p{margin:0;color:var(--muted);font-size:15px}
+
+  footer{border-top:1px solid var(--line);padding:34px 0 60px;color:var(--muted);font-size:13px}
+  .flinks{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:16px}
+  .flinks a{text-decoration:none}
+  .flinks a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="wrap"><a class="back" href="../">← MedRam</a></div>
+
+<header>
+  <div class="wrap">
+    <span class="status">Em preparação</span>
+    <h1>MedRam Cards — revisão médica em <em>Anki</em></h1>
+    <p class="lede">
+      Sistema de revisão com o mesmo padrão editorial do resto do MedRam: cada afirmação
+      com a referência ao lado, raciocínio clínico em vez de memorização solta, e o
+      essencial sem ruído.
+    </p>
+
+    <div class="facts">
+      <div class="fact"><b>~8.000</b>flashcards na base</div>
+      <div class="fact"><b>Cloze</b>um conceito por card</div>
+      <div class="fact"><b>Em uso</b>na minha própria revisão</div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Amostra — preditores de via aérea difícil</h2>
+    <p class="note">
+      Sete cards de um mesmo tópico, de propósito: é assim que o baralho funciona.
+      Em vez de um card gigante com o mnemônico inteiro, cada componente vira uma
+      pergunta isolada, que você acerta ou erra sozinha. Clique para revelar.
+    </p>
+
+    <div class="deckcards">
+      <div class="fc"><p class="q">Mnemônico LEMON — o que deve ser avaliado no componente <b>“L”</b> (Look Externally)?<br><span class="cloze">Presença de boca pequena, pescoço curto ou obesidade</span></p><p class="hint">Clique para revelar</p></div>
+
+      <div class="fc"><p class="q">Mnemônico LEMON — no componente <b>“E”</b> (Evaluate), qual a distância mínima esperada entre os dentes incisivos?<br><span class="cloze">3 dedos</span></p><p class="hint">Clique para revelar</p></div>
+
+      <div class="fc"><p class="q">Mnemônico LEMON — no componente <b>“E”</b> (Evaluate), qual a distância ideal entre o osso hióide e o mento?<br><span class="cloze">3 dedos</span></p><p class="hint">Clique para revelar</p></div>
+
+      <div class="fc"><p class="q">Mnemônico LEMON — no componente <b>“E”</b> (Evaluate), qual a distância ideal entre a cartilagem tireoide e a mandíbula?<br><span class="cloze">2 dedos</span></p><p class="hint">Clique para revelar</p></div>
+
+      <div class="fc"><p class="q">O que avalia o componente <b>“M”</b> do mnemônico LEMON?<br><span class="cloze">Mallampati score (visualização da hipofaringe)</span></p><p class="hint">Clique para revelar</p></div>
+
+      <div class="fc"><p class="q">O que representa o <b>“N”</b> no mnemônico LEMON para preditores de via aérea difícil?<br><span class="cloze">Neck Mobility (mobilidade cervical)</span></p><p class="hint">Clique para revelar</p></div>
+
+      <div class="fc"><p class="q">Quantas tentativas malsucedidas de intubação orotraqueal definem a necessidade de transição para via aérea cirúrgica?<br><span class="cloze">3 tentativas</span></p><p class="hint">Clique para revelar</p></div>
+    </div>
+
+    <div class="about">
+      <h3>Por que um conceito por card</h3>
+      <p>
+        Um card que pede “cite os cinco componentes do LEMON” é respondido por decoreba de lista:
+        você lembra da sequência sem lembrar do que cada letra significa na beira do leito.
+        Sete cards atômicos forçam cada componente a ser recuperado sozinho — e o que você
+        erra fica evidente, em vez de se esconder atrás dos quatro que você acertou.
+      </p>
+      <p>
+        É a mesma lógica dos infográficos: o raciocínio visível, não o resumo bonito.
+      </p>
+    </div>
+
+    <div class="soon">
+      <h3>Pacote completo em breve</h3>
+      <p>
+        A base de cerca de 8.000 cards está em revisão editorial e padronização.
+        A lista de avisos de lançamento abre em breve aqui.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="flinks">
+      <a href="../">Galeria MedRam</a>
+      <a href="https://www.instagram.com/medramnews/">Instagram</a>
+      <a href="https://medram-news.blogspot.com/">Blog</a>
+      <a href="https://github.com/dventurim/medram">Repositório</a>
+    </div>
+    <p style="margin:0">
+      <b>Daniel Venturim Ramos</b> — Faculdade de Medicina, UFMG.
+      Material de estudo, sem finalidade de orientar conduta em paciente individual.
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.fc').forEach(function(el){
+    el.addEventListener('click', function(){
+      el.classList.toggle('open');
+      el.querySelector('.hint').textContent = el.classList.contains('open') ? 'Clique para esconder' : 'Clique para revelar';
+    });
+  });
+</script>
+
+</body>
+</html>
