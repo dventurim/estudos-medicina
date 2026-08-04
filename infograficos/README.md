@@ -41,6 +41,26 @@ que permite corrigir sem refazer, quando a evidência muda.
 diretriz da AAD de 2024 exclui o tema do próprio escopo: registrar isso custa
 espaço e não deixa a arte mais bonita, mas é a diferença entre ensinar e afirmar.
 
+## Tipografia embutida
+
+As peças não carregam mais a folha do Google Fonts. Uma peça que depende de CDN
+não é permanente: se a URL mudar, se a rede cair, ou se alguém abrir o arquivo
+salvo em disco, a tipografia cai para o fallback em silêncio — e a peça muda de
+cara sem avisar ninguém.
+
+O `tools/embed-fonts.py` troca o `<link>` por `@font-face` em data URI,
+montando o subconjunto a partir dos caracteres que a peça realmente usa:
+
+```
+pip install fonttools brotli
+python3 tools/embed-fonts.py infograficos/*/index.html
+```
+
+É idempotente — peça já embutida é pulada. Depois de editar texto, rodar de
+novo só é preciso se o texto novo trouxe caractere que não existia na peça
+(o script já inclui um conjunto-base latino, então acento e símbolo comum
+continuam cobertos).
+
 ## Direitos de imagem
 
 Imagem de terceiro só entra com crédito visível na peça. Se a licença não permitir
